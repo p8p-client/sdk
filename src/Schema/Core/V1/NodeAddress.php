@@ -1,0 +1,27 @@
+<?php
+
+/*
+ * This file is part of the P8P project.
+ *
+ * (c) Julien Jacottet <jjacottet@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace P8p\Sdk\Schema\Core\V1;
+
+class NodeAddress
+{
+    /**
+     * @param string $address the node address
+     * @param string $type    node address type, one of Hostname, ExternalIP or InternalIP
+     */
+    public function __construct(
+        public string $address,
+        public string $type,
+    ) {
+    }
+}
