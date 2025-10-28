@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Batch\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
-#[K8sSchema(kind: 'JobList', apiVersion: 'v1')]
+#[K8sSchema(kind: 'JobList', group: 'batch', version: 'v1')]
 class JobList
 {
     /**

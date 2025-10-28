@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Scheduling\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'PriorityClass', apiVersion: 'v1')]
+#[K8sSchema(kind: 'PriorityClass', group: 'scheduling.k8s.io', version: 'v1')]
 class PriorityClass
 {
     /**

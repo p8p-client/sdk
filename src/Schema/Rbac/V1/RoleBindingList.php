@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Rbac\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
-#[K8sSchema(kind: 'RoleBindingList', apiVersion: 'v1')]
+#[K8sSchema(kind: 'RoleBindingList', group: 'rbac.authorization.k8s.io', version: 'v1')]
 class RoleBindingList
 {
     /**

@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Networking\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'Ingress', apiVersion: 'v1')]
+#[K8sSchema(kind: 'Ingress', group: 'networking.k8s.io', version: 'v1')]
 class Ingress
 {
     /**

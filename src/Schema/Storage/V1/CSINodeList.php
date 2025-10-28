@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Storage\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
-#[K8sSchema(kind: 'CSINodeList', apiVersion: 'v1')]
+#[K8sSchema(kind: 'CSINodeList', group: 'storage.k8s.io', version: 'v1')]
 class CSINodeList
 {
     /**

@@ -17,7 +17,7 @@ use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\LabelSelector;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'CSIStorageCapacity', apiVersion: 'v1')]
+#[K8sSchema(kind: 'CSIStorageCapacity', group: 'storage.k8s.io', version: 'v1')]
 class CSIStorageCapacity
 {
     /**

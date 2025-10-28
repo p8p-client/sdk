@@ -15,7 +15,7 @@ namespace P8p\Sdk\Schema\Meta\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 
-#[K8sSchema(kind: 'Status', apiVersion: 'v1')]
+#[K8sSchema(kind: 'Status', group: '', version: 'v1')]
 class Status
 {
     /**

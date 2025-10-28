@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Apps\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
-#[K8sSchema(kind: 'DaemonSetList', apiVersion: 'v1')]
+#[K8sSchema(kind: 'DaemonSetList', group: 'apps', version: 'v1')]
 class DaemonSetList
 {
     /**

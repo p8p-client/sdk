@@ -15,7 +15,7 @@ namespace P8p\Sdk\Schema\Meta\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 
-#[K8sSchema(kind: 'DeleteOptions', apiVersion: 'v1')]
+#[K8sSchema(kind: 'DeleteOptions', group: '', version: 'v1')]
 class DeleteOptions
 {
     /**

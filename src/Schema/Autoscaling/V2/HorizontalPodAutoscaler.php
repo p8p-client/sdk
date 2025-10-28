@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Autoscaling\V2;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'HorizontalPodAutoscaler', apiVersion: 'v2')]
+#[K8sSchema(kind: 'HorizontalPodAutoscaler', group: 'autoscaling', version: 'v2')]
 class HorizontalPodAutoscaler
 {
     /**

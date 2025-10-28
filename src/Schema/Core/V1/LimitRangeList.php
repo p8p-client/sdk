@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Core\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
-#[K8sSchema(kind: 'LimitRangeList', apiVersion: 'v1')]
+#[K8sSchema(kind: 'LimitRangeList', group: '', version: 'v1')]
 class LimitRangeList
 {
     /**

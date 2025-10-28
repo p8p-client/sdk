@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Core\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'ReplicationController', apiVersion: 'v1')]
+#[K8sSchema(kind: 'ReplicationController', group: '', version: 'v1')]
 class ReplicationController
 {
     /**

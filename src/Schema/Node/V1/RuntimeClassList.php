@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Node\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
-#[K8sSchema(kind: 'RuntimeClassList', apiVersion: 'v1')]
+#[K8sSchema(kind: 'RuntimeClassList', group: 'node.k8s.io', version: 'v1')]
 class RuntimeClassList
 {
     /**

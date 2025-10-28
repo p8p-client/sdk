@@ -18,7 +18,7 @@ use P8p\Sdk\Schema\Core\V1\EventSource;
 use P8p\Sdk\Schema\Core\V1\ObjectReference;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'Event', apiVersion: 'v1')]
+#[K8sSchema(kind: 'Event', group: 'events.k8s.io', version: 'v1')]
 class Event
 {
     /**

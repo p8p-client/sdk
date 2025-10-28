@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Flowcontrol\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'FlowSchema', apiVersion: 'v1')]
+#[K8sSchema(kind: 'FlowSchema', group: 'flowcontrol.apiserver.k8s.io', version: 'v1')]
 class FlowSchema
 {
     /**

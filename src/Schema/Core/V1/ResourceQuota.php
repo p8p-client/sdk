@@ -16,7 +16,7 @@ namespace P8p\Sdk\Schema\Core\V1;
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
-#[K8sSchema(kind: 'ResourceQuota', apiVersion: 'v1')]
+#[K8sSchema(kind: 'ResourceQuota', group: '', version: 'v1')]
 class ResourceQuota
 {
     /**
