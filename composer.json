@@ -2,7 +2,7 @@
     "name": "p8p/sdk",
     "require": {
         "php": ">=8.4",
-        "p8p/client": "dev-master"
+        "p8p/client": "self.version"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.4.0",
