@@ -18,9 +18,9 @@ use P8p\Sdk\Schema\Core\V1\ConfigMap;
 use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 
 /**
- * Tests the Update (Replace) operation against a real Kubernetes cluster.
+ * Tests the Replace operation against a real Kubernetes cluster.
  */
-class UpdateOperationTest extends AbstractFunctional
+class ReplaceOperationTest extends AbstractFunctional
 {
     private ConfigMapApi $api;
     /** @var array<string> */

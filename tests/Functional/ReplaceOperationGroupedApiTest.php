@@ -19,9 +19,9 @@ use P8p\Sdk\Schema\Rbac\V1\PolicyRule;
 use P8p\Sdk\Schema\Rbac\V1\Role;
 
 /**
- * Tests the Update (Replace) operation against a real Kubernetes cluster using a Grouped API.
+ * Tests the Replace operation against a real Kubernetes cluster using a Grouped API.
  */
-class UpdateOperationGroupedApiTest extends AbstractFunctional
+class ReplaceOperationGroupedApiTest extends AbstractFunctional
 {
     private RoleApi $api;
     /** @var array<string> */
