@@ -1,5 +1,13 @@
 {
     "name": "p8p/sdk",
+    "description": "Generated Kubernetes API models and services with strongly-typed PHP classes",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Julien Jacottet",
+            "email": "jjacottet@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=8.4",
         "p8p/client": "self.version"
