@@ -21,7 +21,6 @@ use P8p\Sdk\Schema\Apps\V1\DeploymentStatus;
 use P8p\Sdk\Schema\Core\V1\Container;
 use P8p\Sdk\Schema\Core\V1\PodSpec;
 use P8p\Sdk\Schema\Core\V1\PodTemplateSpec;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 use P8p\Sdk\Schema\Meta\V1\LabelSelector;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
@@ -31,8 +30,6 @@ use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 class ReplaceStatusOperationGroupedApiTest extends AbstractFunctional
 {
     private DeploymentApi $api;
-    /** @var array<string> */
-    private array $createdDeployments = [];
 
     protected function setUp(): void
     {
@@ -42,19 +39,7 @@ class ReplaceStatusOperationGroupedApiTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Deployments
-        foreach ($this->createdDeployments as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(DeploymentApi::class);
         parent::tearDown();
     }
 
@@ -85,7 +70,6 @@ class ReplaceStatusOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $deployment);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdDeployments[] = $name;
 
         sleep(2);
 
@@ -126,7 +110,7 @@ class ReplaceStatusOperationGroupedApiTest extends AbstractFunctional
         $updatedConditions = $updated->status?->conditions ?? [];
         $hasCustomCondition = false;
         foreach ($updatedConditions as $condition) {
-            if ($condition->type === 'CustomCondition') {
+            if ('CustomCondition' === $condition->type) {
                 $hasCustomCondition = true;
                 $this->assertSame('TestReason', $condition->reason);
                 break;

@@ -15,7 +15,6 @@ namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\Core\V1\ConfigMapApi;
 use P8p\Sdk\Schema\Core\V1\ConfigMap;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 
 /**
  * Tests the Create operation against a real Kubernetes cluster.
@@ -23,8 +22,6 @@ use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 class CreateOperationTest extends AbstractFunctional
 {
     private ConfigMapApi $api;
-    /** @var array<string> */
-    private array $createdConfigMaps = [];
 
     protected function setUp(): void
     {
@@ -34,19 +31,7 @@ class CreateOperationTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created ConfigMaps
-        foreach ($this->createdConfigMaps as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(ConfigMapApi::class);
         parent::tearDown();
     }
 
@@ -70,8 +55,6 @@ class CreateOperationTest extends AbstractFunctional
         $this->assertSame(['key1' => 'value1', 'key2' => 'value2'], $created->data);
         $this->assertNotNull($created->metadata?->uid);
         $this->assertNotNull($created->metadata?->resourceVersion);
-
-        $this->createdConfigMaps[] = $name;
     }
 
     public function testCreateConfigMapWithLabels(): void
@@ -97,8 +80,6 @@ class CreateOperationTest extends AbstractFunctional
         $this->assertSame('test-app', $created->metadata?->labels['app']);
         $this->assertSame('production', $created->metadata?->labels['env']);
         $this->assertSame('v1.0.0', $created->metadata?->labels['version']);
-
-        $this->createdConfigMaps[] = $name;
     }
 
     public function testCreateConfigMapWithBinaryData(): void
@@ -119,8 +100,6 @@ class CreateOperationTest extends AbstractFunctional
         $this->assertInstanceOf(ConfigMap::class, $created);
         $this->assertSame(['text-key' => 'text-value'], $created->data);
         $this->assertArrayHasKey('binary-key', $created->binaryData ?? []);
-
-        $this->createdConfigMaps[] = $name;
     }
 
     public function testCreateImmutableConfigMap(): void
@@ -140,8 +119,6 @@ class CreateOperationTest extends AbstractFunctional
         $created = $response->getContent();
         $this->assertInstanceOf(ConfigMap::class, $created);
         $this->assertTrue($created->immutable);
-
-        $this->createdConfigMaps[] = $name;
     }
 
     public function testCreateWithDryRun(): void
@@ -187,7 +164,6 @@ class CreateOperationTest extends AbstractFunctional
         // Create first ConfigMap
         $response1 = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($response1->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Try to create duplicate
         $this->expectException(\Throwable::class);
@@ -214,8 +190,6 @@ class CreateOperationTest extends AbstractFunctional
         $created = $response->getContent();
         $this->assertInstanceOf(ConfigMap::class, $created);
         $this->assertNotNull($created->metadata?->managedFields);
-
-        $this->createdConfigMaps[] = $name;
     }
 
     public function testCreateEmptyConfigMap(): void
@@ -235,7 +209,5 @@ class CreateOperationTest extends AbstractFunctional
         $this->assertInstanceOf(ConfigMap::class, $created);
         $this->assertSame($name, $created->metadata?->name);
         $this->assertNull($created->data);
-
-        $this->createdConfigMaps[] = $name;
     }
 }

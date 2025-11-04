@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\RbacAuthorization\V1\RoleApi;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 use P8p\Sdk\Schema\Rbac\V1\PolicyRule;
 use P8p\Sdk\Schema\Rbac\V1\Role;
 
@@ -24,8 +23,6 @@ use P8p\Sdk\Schema\Rbac\V1\Role;
 class CreateOperationGroupedApiTest extends AbstractFunctional
 {
     private RoleApi $api;
-    /** @var array<string> */
-    private array $createdRoles = [];
 
     protected function setUp(): void
     {
@@ -35,19 +32,7 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Roles
-        foreach ($this->createdRoles as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(RoleApi::class);
         parent::tearDown();
     }
 
@@ -77,8 +62,6 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
         $this->assertNotNull($created->metadata?->uid);
         $this->assertNotNull($created->metadata?->resourceVersion);
         $this->assertCount(1, $created->rules ?? []);
-
-        $this->createdRoles[] = $name;
     }
 
     public function testCreateRoleWithMultipleRules(): void
@@ -108,8 +91,6 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
         $created = $response->getContent();
         $this->assertInstanceOf(Role::class, $created);
         $this->assertCount(2, $created->rules ?? []);
-
-        $this->createdRoles[] = $name;
     }
 
     public function testCreateRoleWithLabels(): void
@@ -141,8 +122,6 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
         $this->assertSame('test-app', $created->metadata?->labels['app']);
         $this->assertSame('production', $created->metadata?->labels['env']);
         $this->assertSame('read-only', $created->metadata?->labels['rbac-type']);
-
-        $this->createdRoles[] = $name;
     }
 
     public function testCreateRoleWithResourceNames(): void
@@ -169,8 +148,6 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
         $this->assertInstanceOf(Role::class, $created);
         $this->assertNotEmpty($created->rules);
         $this->assertSame(['my-secret', 'another-secret'], $created->rules[0]->resourceNames);
-
-        $this->createdRoles[] = $name;
     }
 
     public function testCreateWithDryRun(): void
@@ -228,7 +205,6 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
         // Create first Role
         $response1 = $this->api->create($this->namespace, $role);
         $this->assertTrue($response1->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Try to create duplicate
         $this->expectException(\Throwable::class);
@@ -261,8 +237,6 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
         $created = $response->getContent();
         $this->assertInstanceOf(Role::class, $created);
         $this->assertNotNull($created->metadata?->managedFields);
-
-        $this->createdRoles[] = $name;
     }
 
     public function testCreateRoleWithWildcardVerbs(): void
@@ -287,7 +261,5 @@ class CreateOperationGroupedApiTest extends AbstractFunctional
         $created = $response->getContent();
         $this->assertInstanceOf(Role::class, $created);
         $this->assertSame(['*'], $created->rules[0]->verbs);
-
-        $this->createdRoles[] = $name;
     }
 }

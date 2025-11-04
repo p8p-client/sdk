@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\RbacAuthorization\V1\RoleApi;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 use P8p\Sdk\Schema\Rbac\V1\PolicyRule;
 use P8p\Sdk\Schema\Rbac\V1\Role;
 
@@ -24,8 +23,6 @@ use P8p\Sdk\Schema\Rbac\V1\Role;
 class PatchOperationGroupedApiTest extends AbstractFunctional
 {
     private RoleApi $api;
-    /** @var array<string> */
-    private array $createdRoles = [];
 
     protected function setUp(): void
     {
@@ -35,19 +32,7 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Roles
-        foreach ($this->createdRoles as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(RoleApi::class);
         parent::tearDown();
     }
 
@@ -68,7 +53,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch to modify rules
         $patch = [
@@ -109,7 +93,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch to add a new rule
         $patch = [
@@ -153,7 +136,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch to add/modify labels
         $patch = [
@@ -193,7 +175,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch to add resourceNames
         $patch = [
@@ -251,7 +232,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch with dryRun
         $patch = [
@@ -297,7 +277,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch with fieldManager
         $patch = [
@@ -341,7 +320,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch both rules and labels
         $patch = [
@@ -393,7 +371,6 @@ class PatchOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdRoles[] = $name;
 
         // Patch to keep only one rule
         $patch = [

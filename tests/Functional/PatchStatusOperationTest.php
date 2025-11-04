@@ -17,7 +17,6 @@ use P8p\Sdk\Api\Core\V1\PodApi;
 use P8p\Sdk\Schema\Core\V1\Container;
 use P8p\Sdk\Schema\Core\V1\Pod;
 use P8p\Sdk\Schema\Core\V1\PodSpec;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 
 /**
  * Tests the PatchStatus operation against a real Kubernetes cluster.
@@ -25,8 +24,6 @@ use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 class PatchStatusOperationTest extends AbstractFunctional
 {
     private PodApi $api;
-    /** @var array<string> */
-    private array $createdPods = [];
 
     protected function setUp(): void
     {
@@ -36,19 +33,7 @@ class PatchStatusOperationTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Pods
-        foreach ($this->createdPods as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(PodApi::class);
         parent::tearDown();
     }
 
@@ -70,7 +55,6 @@ class PatchStatusOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $pod);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdPods[] = $name;
 
         // Patch the status by adding a custom condition
         $patch = [
@@ -99,7 +83,7 @@ class PatchStatusOperationTest extends AbstractFunctional
         $updatedConditions = $updated->status?->conditions ?? [];
         $hasCustomCondition = false;
         foreach ($updatedConditions as $condition) {
-            if ($condition->type === 'CustomPatchCondition') {
+            if ('CustomPatchCondition' === $condition->type) {
                 $hasCustomCondition = true;
                 $this->assertSame('PatchTestReason', $condition->reason);
                 break;

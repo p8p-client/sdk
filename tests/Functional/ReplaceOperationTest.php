@@ -15,7 +15,6 @@ namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\Core\V1\ConfigMapApi;
 use P8p\Sdk\Schema\Core\V1\ConfigMap;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 
 /**
  * Tests the Replace operation against a real Kubernetes cluster.
@@ -23,8 +22,6 @@ use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 class ReplaceOperationTest extends AbstractFunctional
 {
     private ConfigMapApi $api;
-    /** @var array<string> */
-    private array $createdConfigMaps = [];
 
     protected function setUp(): void
     {
@@ -34,19 +31,7 @@ class ReplaceOperationTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created ConfigMaps
-        foreach ($this->createdConfigMaps as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(ConfigMapApi::class);
         parent::tearDown();
     }
 
@@ -62,7 +47,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         // Update the ConfigMap data
         $created->data = ['key1' => 'updated-value1', 'key3' => 'value3'];
@@ -89,10 +73,12 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
-        // Update labels
-        $created->metadata->labels = ['env' => 'prod', 'version' => 'v2', 'app' => 'myapp'];
+        // Update labels (merge to preserve p8p-test label)
+        $created->metadata->labels = array_merge(
+            $created->metadata->labels ?? [],
+            ['env' => 'prod', 'version' => 'v2', 'app' => 'myapp']
+        );
 
         $response = $this->api->replace($name, $this->namespace, $created);
 
@@ -117,7 +103,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         // Add binary data
         $created->binaryData = ['binary-key' => base64_encode('binary content')];
@@ -143,7 +128,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         // Try to update with an invalid resourceVersion
         $created->metadata->resourceVersion = '99999999';
@@ -164,7 +148,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         // Update with dryRun
         $created->data = ['key1' => 'updated-value1'];
@@ -196,7 +179,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         // Update with fieldManager
         $created->data = ['test-key' => 'updated-value'];
@@ -227,7 +209,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         // Remove some keys
         $created->data = ['key1' => 'value1'];
@@ -254,7 +235,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $current = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         $initialResourceVersion = $current->metadata?->resourceVersion;
 
@@ -283,7 +263,6 @@ class ReplaceOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdConfigMaps[] = $name;
 
         // Update to remove all data
         $created->data = null;

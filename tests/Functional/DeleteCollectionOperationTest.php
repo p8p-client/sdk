@@ -24,8 +24,6 @@ use P8p\Sdk\Schema\Meta\V1\Status;
 class DeleteCollectionOperationTest extends AbstractFunctional
 {
     private ConfigMapApi $api;
-    /** @var array<string> */
-    private array $createdConfigMaps = [];
 
     protected function setUp(): void
     {
@@ -35,19 +33,7 @@ class DeleteCollectionOperationTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created ConfigMaps
-        foreach ($this->createdConfigMaps as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(ConfigMapApi::class);
         parent::tearDown();
     }
 
@@ -139,8 +125,6 @@ class DeleteCollectionOperationTest extends AbstractFunctional
         $this->assertSame($name3, $read3->metadata?->name);
 
         // Cleanup remaining
-        $this->createdConfigMaps[] = $name2;
-        $this->createdConfigMaps[] = $name3;
 
         // Verify only name1 is deleted
         $this->expectException(\Throwable::class);
@@ -366,6 +350,5 @@ class DeleteCollectionOperationTest extends AbstractFunctional
         $this->assertSame($name2, $read2->metadata?->name);
 
         // Cleanup remaining
-        $this->createdConfigMaps[] = $name2;
     }
 }

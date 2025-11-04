@@ -25,8 +25,6 @@ use P8p\Sdk\Schema\Rbac\V1\Role;
 class DeleteOperationGroupedApiTest extends AbstractFunctional
 {
     private RoleApi $api;
-    /** @var array<string> */
-    private array $createdRoles = [];
 
     protected function setUp(): void
     {
@@ -36,19 +34,7 @@ class DeleteOperationGroupedApiTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Roles
-        foreach ($this->createdRoles as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(RoleApi::class);
         parent::tearDown();
     }
 

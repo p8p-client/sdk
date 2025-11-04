@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\RbacAuthorization\V1\RoleApi;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 use P8p\Sdk\Schema\Rbac\V1\PolicyRule;
 use P8p\Sdk\Schema\Rbac\V1\Role;
 
@@ -24,8 +23,6 @@ use P8p\Sdk\Schema\Rbac\V1\Role;
 class ListOperationGroupedApiTest extends AbstractFunctional
 {
     private RoleApi $api;
-    /** @var array<string> */
-    private array $createdRoles = [];
 
     protected function setUp(): void
     {
@@ -35,19 +32,7 @@ class ListOperationGroupedApiTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Roles
-        foreach ($this->createdRoles as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(RoleApi::class);
         parent::tearDown();
     }
 
@@ -207,7 +192,6 @@ class ListOperationGroupedApiTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful(), 'Failed to create test Role: '.$name);
 
         $created = $response->getContent();
-        $this->createdRoles[] = $created->metadata?->name;
 
         return $created;
     }

@@ -15,7 +15,6 @@ namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\Core\V1\ConfigMapApi;
 use P8p\Sdk\Schema\Core\V1\ConfigMap;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 
 /**
  * Tests the Patch operation against a real Kubernetes cluster.
@@ -23,8 +22,6 @@ use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 class PatchOperationTest extends AbstractFunctional
 {
     private ConfigMapApi $api;
-    /** @var array<string> */
-    private array $createdConfigMaps = [];
 
     protected function setUp(): void
     {
@@ -34,19 +31,7 @@ class PatchOperationTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created ConfigMaps
-        foreach ($this->createdConfigMaps as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(ConfigMapApi::class);
         parent::tearDown();
     }
 
@@ -61,7 +46,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch only key1
         $patch = [
@@ -91,7 +75,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch to add a new key
         $patch = [
@@ -122,7 +105,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch to add/modify labels
         $patch = [
@@ -156,7 +138,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch to remove key2 (set to null)
         $patch = [
@@ -201,7 +182,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch with dryRun
         $patch = [
@@ -236,7 +216,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch with fieldManager
         $patch = [
@@ -270,7 +249,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch both data and labels
         $patch = [
@@ -309,7 +287,6 @@ class PatchOperationTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $configMap);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdConfigMaps[] = $name;
 
         // Patch to add binary data
         $patch = [

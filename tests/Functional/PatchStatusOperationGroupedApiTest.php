@@ -19,7 +19,6 @@ use P8p\Sdk\Schema\Apps\V1\DeploymentSpec;
 use P8p\Sdk\Schema\Core\V1\Container;
 use P8p\Sdk\Schema\Core\V1\PodSpec;
 use P8p\Sdk\Schema\Core\V1\PodTemplateSpec;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 use P8p\Sdk\Schema\Meta\V1\LabelSelector;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
@@ -29,8 +28,6 @@ use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 class PatchStatusOperationGroupedApiTest extends AbstractFunctional
 {
     private DeploymentApi $api;
-    /** @var array<string> */
-    private array $createdDeployments = [];
 
     protected function setUp(): void
     {
@@ -40,19 +37,7 @@ class PatchStatusOperationGroupedApiTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Deployments
-        foreach ($this->createdDeployments as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(DeploymentApi::class);
         parent::tearDown();
     }
 
@@ -83,7 +68,6 @@ class PatchStatusOperationGroupedApiTest extends AbstractFunctional
 
         $createResponse = $this->api->create($this->namespace, $deployment);
         $this->assertTrue($createResponse->isSuccessful());
-        $this->createdDeployments[] = $name;
 
         // Patch the status by adding a custom condition
         $patch = [
@@ -112,7 +96,7 @@ class PatchStatusOperationGroupedApiTest extends AbstractFunctional
         $updatedConditions = $updated->status?->conditions ?? [];
         $hasCustomCondition = false;
         foreach ($updatedConditions as $condition) {
-            if ($condition->type === 'CustomPatchCondition') {
+            if ('CustomPatchCondition' === $condition->type) {
                 $hasCustomCondition = true;
                 $this->assertSame('PatchTestReason', $condition->reason);
                 break;

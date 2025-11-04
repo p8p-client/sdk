@@ -19,7 +19,6 @@ use P8p\Sdk\Schema\Core\V1\Pod;
 use P8p\Sdk\Schema\Core\V1\PodCondition;
 use P8p\Sdk\Schema\Core\V1\PodSpec;
 use P8p\Sdk\Schema\Core\V1\PodStatus;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 
 /**
  * Tests the ReplaceStatus operation against a real Kubernetes cluster.
@@ -27,8 +26,6 @@ use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 class ReplaceStatusOperationTest extends AbstractFunctional
 {
     private PodApi $api;
-    /** @var array<string> */
-    private array $createdPods = [];
 
     protected function setUp(): void
     {
@@ -38,19 +35,7 @@ class ReplaceStatusOperationTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Pods
-        foreach ($this->createdPods as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(PodApi::class);
         parent::tearDown();
     }
 
@@ -73,7 +58,6 @@ class ReplaceStatusOperationTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $pod);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdPods[] = $name;
 
         // Read the current status
         $readResponse = $this->api->readStatus($name, $this->namespace);
@@ -112,7 +96,7 @@ class ReplaceStatusOperationTest extends AbstractFunctional
         $updatedConditions = $updated->status?->conditions ?? [];
         $hasCustomCondition = false;
         foreach ($updatedConditions as $condition) {
-            if ($condition->type === 'CustomCondition') {
+            if ('CustomCondition' === $condition->type) {
                 $hasCustomCondition = true;
                 $this->assertSame('TestReason', $condition->reason);
                 break;

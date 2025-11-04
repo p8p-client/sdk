@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\RbacAuthorization\V1\RoleApi;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 use P8p\Sdk\Schema\Rbac\V1\PolicyRule;
 use P8p\Sdk\Schema\Rbac\V1\Role;
 
@@ -24,8 +23,6 @@ use P8p\Sdk\Schema\Rbac\V1\Role;
 class ReplaceOperationGroupedApiTest extends AbstractFunctional
 {
     private RoleApi $api;
-    /** @var array<string> */
-    private array $createdRoles = [];
 
     protected function setUp(): void
     {
@@ -35,19 +32,7 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created Roles
-        foreach ($this->createdRoles as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(RoleApi::class);
         parent::tearDown();
     }
 
@@ -69,7 +54,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         // Update the rules
         $created->rules = [
@@ -110,10 +94,12 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
-        // Update labels
-        $created->metadata->labels = ['env' => 'prod', 'team' => 'platform', 'rbac-type' => 'read-only'];
+        // Update labels (merge to preserve p8p-test label)
+        $created->metadata->labels = array_merge(
+            $created->metadata->labels ?? [],
+            ['env' => 'prod', 'team' => 'platform', 'rbac-type' => 'read-only']
+        );
 
         $response = $this->api->replace($name, $this->namespace, $created);
 
@@ -144,7 +130,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         // Add more rules
         $created->rules = [
@@ -192,7 +177,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         // Try to update with an invalid resourceVersion
         $created->metadata->resourceVersion = '99999999';
@@ -219,7 +203,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         // Update with dryRun
         $created->rules = [
@@ -264,7 +247,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         // Update with fieldManager
         $created->rules = [
@@ -312,7 +294,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         // Remove one rule
         $created->rules = [
@@ -350,7 +331,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $current = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         $initialResourceVersion = $current->metadata?->resourceVersion;
 
@@ -397,7 +377,6 @@ class ReplaceOperationGroupedApiTest extends AbstractFunctional
         $createResponse = $this->api->create($this->namespace, $role);
         $this->assertTrue($createResponse->isSuccessful());
         $created = $createResponse->getContent();
-        $this->createdRoles[] = $name;
 
         // Update to add resourceNames
         $created->rules = [

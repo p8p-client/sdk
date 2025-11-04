@@ -15,7 +15,6 @@ namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\Core\V1\ConfigMapApi;
 use P8p\Sdk\Schema\Core\V1\ConfigMap;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 
 /**
  * Tests the List operation against a real Kubernetes cluster.
@@ -23,8 +22,6 @@ use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
 class ListOperationTest extends AbstractFunctional
 {
     private ConfigMapApi $api;
-    /** @var array<string> */
-    private array $createdConfigMaps = [];
 
     protected function setUp(): void
     {
@@ -34,19 +31,7 @@ class ListOperationTest extends AbstractFunctional
 
     protected function tearDown(): void
     {
-        // Clean up all created ConfigMaps
-        foreach ($this->createdConfigMaps as $name) {
-            try {
-                $this->api->delete(
-                    name: $name,
-                    namespace: $this->namespace,
-                    body: new DeleteOptions()
-                );
-            } catch (\Throwable) {
-                // Ignore errors during cleanup
-            }
-        }
-
+        $this->cleanupResources(ConfigMapApi::class);
         parent::tearDown();
     }
 
@@ -199,7 +184,6 @@ class ListOperationTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful(), 'Failed to create test ConfigMap: '.$name);
 
         $created = $response->getContent();
-        $this->createdConfigMaps[] = $created->metadata?->name;
 
         return $created;
     }
