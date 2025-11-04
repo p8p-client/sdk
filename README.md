@@ -1,5 +1,10 @@
 # P8P SDK Component
 
+> **⚠️ Development Status**
+>
+> This project is under active development and is not yet ready for production use.
+> APIs and features may change without notice.
+
 The SDK component contains auto-generated Kubernetes API models and service classes created by the
 P8P Code Generator. It provides strongly-typed PHP classes for all Kubernetes resources, complete
 with proper metadata, type hints, and IDE autocomplete support.
