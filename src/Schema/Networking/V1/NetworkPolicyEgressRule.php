@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace P8p\Sdk\Schema\Networking\V1;
 
+use P8p\Client\Attribute\K8sSchemaRef;
+
+#[K8sSchemaRef(name: 'io.k8s.api.networking.v1.NetworkPolicyEgressRule')]
 class NetworkPolicyEgressRule
 {
     /**

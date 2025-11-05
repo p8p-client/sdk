@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Storage\V1;
 
 use P8p\Client\Attribute\K8sSchema;
+use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Core\V1\TopologySelectorTerm;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
+#[K8sSchemaRef(name: 'io.k8s.api.storage.v1.StorageClass')]
 #[K8sSchema(kind: 'StorageClass', group: 'storage.k8s.io', version: 'v1')]
 class StorageClass
 {

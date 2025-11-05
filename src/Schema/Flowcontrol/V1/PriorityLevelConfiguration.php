@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Flowcontrol\V1;
 
 use P8p\Client\Attribute\K8sSchema;
+use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
+#[K8sSchemaRef(name: 'io.k8s.api.flowcontrol.v1.PriorityLevelConfiguration')]
 #[K8sSchema(kind: 'PriorityLevelConfiguration', group: 'flowcontrol.apiserver.k8s.io', version: 'v1')]
 class PriorityLevelConfiguration
 {

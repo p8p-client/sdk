@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Certificates\V1;
 
 use P8p\Client\Attribute\K8sSchema;
+use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
+#[K8sSchemaRef(name: 'io.k8s.api.certificates.v1.CertificateSigningRequest')]
 #[K8sSchema(kind: 'CertificateSigningRequest', group: 'certificates.k8s.io', version: 'v1')]
 class CertificateSigningRequest
 {

@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace P8p\Sdk\Schema\Apps\V1;
 
+use P8p\Client\Attribute\K8sSchemaRef;
+
+#[K8sSchemaRef(name: 'io.k8s.api.apps.v1.DeploymentStrategy')]
 class DeploymentStrategy
 {
     /**

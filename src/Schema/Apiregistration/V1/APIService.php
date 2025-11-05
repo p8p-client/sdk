@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Apiregistration\V1;
 
 use P8p\Client\Attribute\K8sSchema;
+use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
+#[K8sSchemaRef(name: 'io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService')]
 #[K8sSchema(kind: 'APIService', group: 'apiregistration.k8s.io', version: 'v1')]
 class APIService
 {

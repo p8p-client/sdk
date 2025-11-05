@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Meta\V1;
 
 use P8p\Client\Attribute\K8sSchema;
+use P8p\Client\Attribute\K8sSchemaRef;
 
+#[K8sSchemaRef(name: 'io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions')]
 #[K8sSchema(kind: 'DeleteOptions', group: '', version: 'v1')]
 class DeleteOptions
 {

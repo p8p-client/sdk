@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace P8p\Sdk\Schema\Authentication\V1;
 
+use P8p\Client\Attribute\K8sSchemaRef;
+
+#[K8sSchemaRef(name: 'io.k8s.api.authentication.v1.TokenRequestSpec')]
 class TokenRequestSpec
 {
     /**

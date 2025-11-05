@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace P8p\Sdk\Schema\Admissionregistration\V1;
 
+use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Meta\V1\LabelSelector;
 
+#[K8sSchemaRef(name: 'io.k8s.api.admissionregistration.v1.ParamRef')]
 class ParamRef
 {
     /**

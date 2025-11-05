@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Node\V1;
 
 use P8p\Client\Attribute\K8sSchema;
+use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
+#[K8sSchemaRef(name: 'io.k8s.api.node.v1.RuntimeClassList')]
 #[K8sSchema(kind: 'RuntimeClassList', group: 'node.k8s.io', version: 'v1')]
 class RuntimeClassList
 {

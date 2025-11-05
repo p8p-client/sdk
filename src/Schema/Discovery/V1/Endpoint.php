@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace P8p\Sdk\Schema\Discovery\V1;
 
+use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Core\V1\ObjectReference;
 
+#[K8sSchemaRef(name: 'io.k8s.api.discovery.v1.Endpoint')]
 class Endpoint
 {
     /**
