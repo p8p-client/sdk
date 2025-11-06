@@ -17,10 +17,10 @@ use P8p\Sdk\Api\Apps\V1\DeploymentApi;
 use P8p\Sdk\Schema\Apps\V1\Deployment;
 use P8p\Sdk\Schema\Apps\V1\DeploymentSpec;
 use P8p\Sdk\Schema\Core\V1\Container;
+use P8p\Sdk\Schema\Core\V1\LabelSelector;
+use P8p\Sdk\Schema\Core\V1\ObjectMeta;
 use P8p\Sdk\Schema\Core\V1\PodSpec;
 use P8p\Sdk\Schema\Core\V1\PodTemplateSpec;
-use P8p\Sdk\Schema\Meta\V1\LabelSelector;
-use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
 /**
  * Tests the ReadStatus operation against a real Kubernetes cluster using a Grouped API.

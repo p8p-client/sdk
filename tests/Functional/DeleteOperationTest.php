@@ -15,8 +15,8 @@ namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\Core\V1\ConfigMapApi;
 use P8p\Sdk\Schema\Core\V1\ConfigMap;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
+use P8p\Sdk\Schema\Core\V1\Status;
 
 /**
  * Tests the Delete operation against a real Kubernetes cluster.

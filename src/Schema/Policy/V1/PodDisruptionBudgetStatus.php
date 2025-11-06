@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Policy\V1;
 
 use P8p\Client\Attribute\K8sSchemaRef;
-use P8p\Sdk\Schema\Meta\V1\Condition;
+use P8p\Sdk\Schema\Core\V1\Condition;
 
 #[K8sSchemaRef(name: 'io.k8s.api.policy.v1.PodDisruptionBudgetStatus')]
 class PodDisruptionBudgetStatus

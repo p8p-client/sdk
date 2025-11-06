@@ -15,7 +15,7 @@ namespace P8p\Sdk\Schema\Admissionregistration\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Client\Attribute\K8sSchemaRef;
-use P8p\Sdk\Schema\Meta\V1\ListMeta;
+use P8p\Sdk\Schema\Core\V1\ListMeta;
 
 #[K8sSchemaRef(name: 'io.k8s.api.admissionregistration.v1.ValidatingAdmissionPolicyBindingList')]
 #[K8sSchema(kind: 'ValidatingAdmissionPolicyBindingList', group: 'admissionregistration.k8s.io', version: 'v1')]

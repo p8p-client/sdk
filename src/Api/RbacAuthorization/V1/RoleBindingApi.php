@@ -15,10 +15,10 @@ namespace P8p\Sdk\Api\RbacAuthorization\V1;
 
 use P8p\Client\Api\AbstractApi;
 use P8p\Client\Response;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
-use P8p\Sdk\Schema\Rbac\V1\RoleBinding;
-use P8p\Sdk\Schema\Rbac\V1\RoleBindingList;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
+use P8p\Sdk\Schema\Core\V1\Status;
+use P8p\Sdk\Schema\RbacAuthorization\V1\RoleBinding;
+use P8p\Sdk\Schema\RbacAuthorization\V1\RoleBindingList;
 
 class RoleBindingApi extends AbstractApi
 {

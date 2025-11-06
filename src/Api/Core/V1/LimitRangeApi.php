@@ -15,10 +15,10 @@ namespace P8p\Sdk\Api\Core\V1;
 
 use P8p\Client\Api\AbstractApi;
 use P8p\Client\Response;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
 use P8p\Sdk\Schema\Core\V1\LimitRange;
 use P8p\Sdk\Schema\Core\V1\LimitRangeList;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
+use P8p\Sdk\Schema\Core\V1\Status;
 
 class LimitRangeApi extends AbstractApi
 {

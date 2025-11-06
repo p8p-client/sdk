@@ -15,7 +15,6 @@ namespace P8p\Sdk\Schema\Core\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Client\Attribute\K8sSchemaRef;
-use P8p\Sdk\Schema\Meta\V1\ListMeta;
 
 #[K8sSchemaRef(name: 'io.k8s.api.core.v1.ServiceAccountList')]
 #[K8sSchema(kind: 'ServiceAccountList', group: '', version: 'v1')]

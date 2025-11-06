@@ -15,7 +15,7 @@ namespace P8p\Sdk\Schema\Node\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Client\Attribute\K8sSchemaRef;
-use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
+use P8p\Sdk\Schema\Core\V1\ObjectMeta;
 
 #[K8sSchemaRef(name: 'io.k8s.api.node.v1.RuntimeClass')]
 #[K8sSchema(kind: 'RuntimeClass', group: 'node.k8s.io', version: 'v1')]

@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\RbacAuthorization\V1\RoleApi;
-use P8p\Sdk\Schema\Rbac\V1\PolicyRule;
-use P8p\Sdk\Schema\Rbac\V1\Role;
+use P8p\Sdk\Schema\RbacAuthorization\V1\PolicyRule;
+use P8p\Sdk\Schema\RbacAuthorization\V1\Role;
 
 /**
  * Tests the List operation against a real Kubernetes cluster using a Grouped API.
@@ -48,7 +48,7 @@ class ListOperationGroupedApiTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful());
 
         $roleList = $response->getContent();
-        $this->assertInstanceOf(\P8p\Sdk\Schema\Rbac\V1\RoleList::class, $roleList);
+        $this->assertInstanceOf(\P8p\Sdk\Schema\RbacAuthorization\V1\RoleList::class, $roleList);
         $this->assertNotEmpty($roleList->items);
 
         // Verify our created Roles are in the list
@@ -73,7 +73,7 @@ class ListOperationGroupedApiTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful());
 
         $roleList = $response->getContent();
-        $this->assertInstanceOf(\P8p\Sdk\Schema\Rbac\V1\RoleList::class, $roleList);
+        $this->assertInstanceOf(\P8p\Sdk\Schema\RbacAuthorization\V1\RoleList::class, $roleList);
 
         // Should contain only Roles with app=test-selector
         $names = array_map(fn ($role) => $role->metadata?->name, $roleList->items);
@@ -97,7 +97,7 @@ class ListOperationGroupedApiTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful());
 
         $roleList = $response->getContent();
-        $this->assertInstanceOf(\P8p\Sdk\Schema\Rbac\V1\RoleList::class, $roleList);
+        $this->assertInstanceOf(\P8p\Sdk\Schema\RbacAuthorization\V1\RoleList::class, $roleList);
 
         // Should contain only Roles matching both labels
         $names = array_map(fn ($role) => $role->metadata?->name, $roleList->items);
@@ -124,7 +124,7 @@ class ListOperationGroupedApiTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful());
 
         $roleList = $response->getContent();
-        $this->assertInstanceOf(\P8p\Sdk\Schema\Rbac\V1\RoleList::class, $roleList);
+        $this->assertInstanceOf(\P8p\Sdk\Schema\RbacAuthorization\V1\RoleList::class, $roleList);
         $this->assertCount(2, $roleList->items);
 
         // Should have continue token for pagination
@@ -144,7 +144,7 @@ class ListOperationGroupedApiTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful());
 
         $roleList = $response->getContent();
-        $this->assertInstanceOf(\P8p\Sdk\Schema\Rbac\V1\RoleList::class, $roleList);
+        $this->assertInstanceOf(\P8p\Sdk\Schema\RbacAuthorization\V1\RoleList::class, $roleList);
         $this->assertNotEmpty($roleList->items);
 
         // Verify our created Role is in the list
@@ -163,7 +163,7 @@ class ListOperationGroupedApiTest extends AbstractFunctional
         $this->assertTrue($response->isSuccessful());
 
         $roleList = $response->getContent();
-        $this->assertInstanceOf(\P8p\Sdk\Schema\Rbac\V1\RoleList::class, $roleList);
+        $this->assertInstanceOf(\P8p\Sdk\Schema\RbacAuthorization\V1\RoleList::class, $roleList);
         $this->assertEmpty($roleList->items);
     }
 

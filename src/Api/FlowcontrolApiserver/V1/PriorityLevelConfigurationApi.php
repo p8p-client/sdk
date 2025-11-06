@@ -15,10 +15,10 @@ namespace P8p\Sdk\Api\FlowcontrolApiserver\V1;
 
 use P8p\Client\Api\AbstractApi;
 use P8p\Client\Response;
-use P8p\Sdk\Schema\Flowcontrol\V1\PriorityLevelConfiguration;
-use P8p\Sdk\Schema\Flowcontrol\V1\PriorityLevelConfigurationList;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
+use P8p\Sdk\Schema\Core\V1\Status;
+use P8p\Sdk\Schema\FlowcontrolApiserver\V1\PriorityLevelConfiguration;
+use P8p\Sdk\Schema\FlowcontrolApiserver\V1\PriorityLevelConfigurationList;
 
 class PriorityLevelConfigurationApi extends AbstractApi
 {

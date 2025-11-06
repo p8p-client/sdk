@@ -15,8 +15,8 @@ namespace P8p\Sdk\Api\Storage\V1;
 
 use P8p\Client\Api\AbstractApi;
 use P8p\Client\Response;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
+use P8p\Sdk\Schema\Core\V1\Status;
 use P8p\Sdk\Schema\Storage\V1\CSIDriver;
 use P8p\Sdk\Schema\Storage\V1\CSIDriverList;
 

@@ -15,7 +15,6 @@ namespace P8p\Sdk\Schema\Core\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Client\Attribute\K8sSchemaRef;
-use P8p\Sdk\Schema\Meta\V1\ObjectMeta;
 
 #[K8sSchemaRef(name: 'io.k8s.api.core.v1.Event')]
 #[K8sSchema(kind: 'Event', group: '', version: 'v1')]

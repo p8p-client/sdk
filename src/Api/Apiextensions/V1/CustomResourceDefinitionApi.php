@@ -17,8 +17,8 @@ use P8p\Client\Api\AbstractApi;
 use P8p\Client\Response;
 use P8p\Sdk\Schema\Apiextensions\V1\CustomResourceDefinition;
 use P8p\Sdk\Schema\Apiextensions\V1\CustomResourceDefinitionList;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
+use P8p\Sdk\Schema\Core\V1\Status;
 
 class CustomResourceDefinitionApi extends AbstractApi
 {

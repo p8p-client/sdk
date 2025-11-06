@@ -17,8 +17,8 @@ use P8p\Client\Api\AbstractApi;
 use P8p\Client\Response;
 use P8p\Sdk\Schema\Batch\V1\Job;
 use P8p\Sdk\Schema\Batch\V1\JobList;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
+use P8p\Sdk\Schema\Core\V1\Status;
 
 class JobApi extends AbstractApi
 {

@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace P8p\Sdk\Schema\Apps\V1;
 
 use P8p\Client\Attribute\K8sSchemaRef;
+use P8p\Sdk\Schema\Core\V1\LabelSelector;
 use P8p\Sdk\Schema\Core\V1\PodTemplateSpec;
-use P8p\Sdk\Schema\Meta\V1\LabelSelector;
 
 #[K8sSchemaRef(name: 'io.k8s.api.apps.v1.ReplicaSetSpec')]
 class ReplicaSetSpec

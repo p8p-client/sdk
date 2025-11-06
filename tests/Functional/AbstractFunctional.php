@@ -139,9 +139,9 @@ abstract class AbstractFunctional extends TestCase
      * Automatically adds the 'p8p-test' => 'true' label to all resources
      * for easy cleanup using label selectors.
      */
-    protected function createMetadata(string $name, ?array $labels = null): \P8p\Sdk\Schema\Meta\V1\ObjectMeta
+    protected function createMetadata(string $name, ?array $labels = null): \P8p\Sdk\Schema\Core\V1\ObjectMeta
     {
-        return new \P8p\Sdk\Schema\Meta\V1\ObjectMeta(
+        return new \P8p\Sdk\Schema\Core\V1\ObjectMeta(
             labels: array_merge(
                 ['p8p-test' => 'true'],
                 $labels ?? []
@@ -166,7 +166,7 @@ abstract class AbstractFunctional extends TestCase
 
             $response = $api->deleteCollection(
                 namespace: $this->namespace,
-                body: new \P8p\Sdk\Schema\Meta\V1\DeleteOptions(),
+                body: new \P8p\Sdk\Schema\Core\V1\DeleteOptions(),
                 queryParameters: ['labelSelector' => 'p8p-test=true']
             );
 

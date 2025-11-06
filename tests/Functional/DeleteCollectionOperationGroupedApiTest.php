@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace P8p\Sdk\Tests\Functional;
 
 use P8p\Sdk\Api\RbacAuthorization\V1\RoleApi;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
-use P8p\Sdk\Schema\Rbac\V1\PolicyRule;
-use P8p\Sdk\Schema\Rbac\V1\Role;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
+use P8p\Sdk\Schema\Core\V1\Status;
+use P8p\Sdk\Schema\RbacAuthorization\V1\PolicyRule;
+use P8p\Sdk\Schema\RbacAuthorization\V1\Role;
 
 /**
  * Tests the DeleteCollection operation against a real Kubernetes cluster using a Grouped API.

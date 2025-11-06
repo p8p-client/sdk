@@ -15,7 +15,7 @@ namespace P8p\Sdk\Schema\Apps\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Client\Attribute\K8sSchemaRef;
-use P8p\Sdk\Schema\Meta\V1\ListMeta;
+use P8p\Sdk\Schema\Core\V1\ListMeta;
 
 #[K8sSchemaRef(name: 'io.k8s.api.apps.v1.DeploymentList')]
 #[K8sSchema(kind: 'DeploymentList', group: 'apps', version: 'v1')]

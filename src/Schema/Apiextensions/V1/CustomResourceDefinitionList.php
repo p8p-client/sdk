@@ -15,7 +15,7 @@ namespace P8p\Sdk\Schema\Apiextensions\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Client\Attribute\K8sSchemaRef;
-use P8p\Sdk\Schema\Meta\V1\ListMeta;
+use P8p\Sdk\Schema\Core\V1\ListMeta;
 
 #[K8sSchemaRef(name: 'io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinitionList')]
 #[K8sSchema(kind: 'CustomResourceDefinitionList', group: 'apiextensions.k8s.io', version: 'v1')]

@@ -15,10 +15,10 @@ namespace P8p\Sdk\Api\Core\V1;
 
 use P8p\Client\Api\AbstractApi;
 use P8p\Client\Response;
+use P8p\Sdk\Schema\Core\V1\DeleteOptions;
 use P8p\Sdk\Schema\Core\V1\NamespaceK8s;
 use P8p\Sdk\Schema\Core\V1\NamespaceList;
-use P8p\Sdk\Schema\Meta\V1\DeleteOptions;
-use P8p\Sdk\Schema\Meta\V1\Status;
+use P8p\Sdk\Schema\Core\V1\Status;
 
 class NamespaceK8sApi extends AbstractApi
 {
