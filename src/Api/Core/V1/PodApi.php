@@ -260,6 +260,69 @@ class PodApi extends AbstractApi
     }
 
     /**
+     * Read resize of the specified Pod.
+     *
+     * @param string                      $name            name of the Pod
+     * @param string                      $namespace       object name and auth scope, such as for teams and projects
+     * @param array{pretty?: string|null} $queryParameters
+     *
+     * @return Response<Pod>
+     */
+    public function readResize(string $name, string $namespace, array $queryParameters = []): Response
+    {
+        return $this->client->makeRequest(
+            verb: 'GET',
+            path: '/api/v1/namespaces/{namespace}/pods/{name}/resize',
+            pathParameters: ['name' => $name, 'namespace' => $namespace],
+            responseClass: Pod::class,
+            queryParameters: $queryParameters,
+        );
+    }
+
+    /**
+     * Replace resize of the specified Pod.
+     *
+     * @param string                                                                                                       $name            name of the Pod
+     * @param string                                                                                                       $namespace       object name and auth scope, such as for teams and projects
+     * @param array{pretty?: string|null, dryRun?: string|null, fieldManager?: string|null, fieldValidation?: string|null} $queryParameters
+     *
+     * @return Response<Pod>
+     */
+    public function replaceResize(string $name, string $namespace, Pod $body, array $queryParameters = []): Response
+    {
+        return $this->client->makeRequest(
+            verb: 'PUT',
+            path: '/api/v1/namespaces/{namespace}/pods/{name}/resize',
+            pathParameters: ['name' => $name, 'namespace' => $namespace],
+            responseClass: Pod::class,
+            body: $body,
+            queryParameters: $queryParameters,
+        );
+    }
+
+    /**
+     * Partially update resize of the specified Pod.
+     *
+     * @param string                                                                                                                          $name            name of the Pod
+     * @param string                                                                                                                          $namespace       object name and auth scope, such as for teams and projects
+     * @param array<mixed>                                                                                                                    $body
+     * @param array{pretty?: string|null, dryRun?: string|null, fieldManager?: string|null, fieldValidation?: string|null, force?: bool|null} $queryParameters
+     *
+     * @return Response<Pod>
+     */
+    public function patchResize(string $name, string $namespace, array $body, array $queryParameters = []): Response
+    {
+        return $this->client->makeRequest(
+            verb: 'PATCH',
+            path: '/api/v1/namespaces/{namespace}/pods/{name}/resize',
+            pathParameters: ['name' => $name, 'namespace' => $namespace],
+            responseClass: Pod::class,
+            body: $body,
+            queryParameters: $queryParameters,
+        );
+    }
+
+    /**
      * Read status of the specified Pod.
      *
      * @param string                      $name            name of the Pod

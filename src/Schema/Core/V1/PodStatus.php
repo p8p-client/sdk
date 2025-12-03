@@ -27,6 +27,7 @@ class PodStatus
      * @param array<int, ContainerStatus>|null $initContainerStatuses      Statuses of init containers in this pod. The most recent successful non-restartable init container will have ready = true, the most recently started container will have startTime set. Each init container in the pod should have at most one status in this list, and all statuses should be for containers in the pod. However this is not enforced. If a status for a non-existent container is present in the list, or the list has duplicate names, the behavior of various Kubernetes components is not defined and those statuses might be ignored. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-and-container-status
      * @param string|null                      $message                    a human readable message indicating details about why the pod is in this condition
      * @param string|null                      $nominatedNodeName          nominatedNodeName is set only when this pod preempts other pods on the node, but it cannot be scheduled right away as preemption victims receive their graceful termination periods. This field does not guarantee that the pod will be scheduled on this node. Scheduler may decide to place the pod elsewhere if other nodes become available sooner. Scheduler may also decide to give the resources on this node to a higher priority pod that is created after preemption. As a result, this field may be different than PodSpec.nodeName when the pod is scheduled.
+     * @param int|null                         $observedGeneration         If set, this represents the .metadata.generation that the pod status was set based upon. This is an alpha field. Enable PodObservedGenerationTracking to be able to use this field.
      * @param string|null                      $phase                      The phase of a Pod is a simple, high-level summary of where the Pod is in its lifecycle. The conditions array, the reason and message fields, and the individual container status arrays contain more detail about the pod's status. There are five possible phase values:
      *
      * Pending: The pod has been accepted by the Kubernetes system, but one or more of the container images has not been created. This includes time before being scheduled as well as time spent downloading images over the network, which could take a while. Running: The pod has been bound to a node, and all of the containers have been created. At least one container is still running, or is in the process of starting or restarting. Succeeded: All containers in the pod have terminated in success, and will not be restarted. Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system. Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.
@@ -48,7 +49,7 @@ class PodStatus
      *  - `"Burstable"` is the Burstable qos class.
      *  - `"Guaranteed"` is the Guaranteed qos class.
      * @param string|null                             $reason                A brief CamelCase message indicating details about why the pod is in this state. e.g. 'Evicted'
-     * @param string|null                             $resize                Status of resources resize desired for pod's containers. It is empty if no resources resize is pending. Any changes to container resources will automatically set this to "Proposed"
+     * @param string|null                             $resize                Status of resources resize desired for pod's containers. It is empty if no resources resize is pending. Any changes to container resources will automatically set this to "Proposed" Deprecated: Resize status is moved to two pod conditions PodResizePending and PodResizeInProgress. PodResizePending will track states where the spec has been resized, but the Kubelet has not yet allocated the resources. PodResizeInProgress will track in-progress resizes, and should be present whenever allocated resources != acknowledged resources.
      * @param array<int, PodResourceClaimStatus>|null $resourceClaimStatuses status of resource claims
      * @param \DateTime|null                          $startTime             RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
      */
@@ -61,6 +62,7 @@ class PodStatus
         public ?array $initContainerStatuses = null,
         public ?string $message = null,
         public ?string $nominatedNodeName = null,
+        public ?int $observedGeneration = null,
         public ?string $phase = null,
         public ?string $podIP = null,
         public ?array $podIPs = null,

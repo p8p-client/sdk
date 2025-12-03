@@ -35,6 +35,7 @@ class ScopedResourceSelectorRequirement
      *  - `"NotTerminating"` Match all pod objects where spec.activeDeadlineSeconds is nil
      *  - `"PriorityClass"` Match all pod objects that have priority class mentioned
      *  - `"Terminating"` Match all pod objects where spec.activeDeadlineSeconds >=0
+     *  - `"VolumeAttributesClass"` Match all pvc objects that have volume attributes class mentioned.
      * @param array<int, string>|null $values An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
      */
     public function __construct(

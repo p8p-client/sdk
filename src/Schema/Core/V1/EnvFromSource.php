@@ -20,7 +20,7 @@ class EnvFromSource
 {
     /**
      * @param ConfigMapEnvSource|null $configMapRef The ConfigMap to select from
-     * @param string|null             $prefix       An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+     * @param string|null             $prefix       Optional text to prepend to the name of each environment variable. Must be a C_IDENTIFIER.
      * @param SecretEnvSource|null    $secretRef    The Secret to select from
      */
     public function __construct(

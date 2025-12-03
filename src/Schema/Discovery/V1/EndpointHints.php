@@ -19,9 +19,11 @@ use P8p\Client\Attribute\K8sSchemaRef;
 class EndpointHints
 {
     /**
-     * @param array<int, ForZone>|null $forZones forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing
+     * @param array<int, ForNode>|null $forNodes forNodes indicates the node(s) this endpoint should be consumed by when using topology aware routing. May contain a maximum of 8 entries. This is an Alpha feature and is only used when the PreferSameTrafficDistribution feature gate is enabled.
+     * @param array<int, ForZone>|null $forZones forZones indicates the zone(s) this endpoint should be consumed by when using topology aware routing. May contain a maximum of 8 entries.
      */
     public function __construct(
+        public ?array $forNodes = null,
         public ?array $forZones = null,
     ) {
     }

@@ -38,14 +38,14 @@ class TopologySpreadConstraint
      * For example, in a 3-zone cluster, MaxSkew is set to 2, MinDomains is set to 5 and pods with the same labelSelector spread as 2/2/2: | zone1 | zone2 | zone3 | |  P P  |  P P  |  P P  | The number of domains is less than 5(MinDomains), so "global minimum" is treated as 0. In this situation, new pod with the same labelSelector cannot be scheduled, because computed skew will be 3(3 - 0) if new Pod is scheduled to any of the three zones, it will violate MaxSkew.
      * @param string|null $nodeAffinityPolicy NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector when calculating pod topology spread skew. Options are: - Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations. - Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.
      *
-     * If this value is nil, the behavior is equivalent to the Honor policy. This is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+     * If this value is nil, the behavior is equivalent to the Honor policy.
      *
      * Possible enum values:
      *  - `"Honor"` means use this scheduling directive when calculating pod topology spread skew.
      *  - `"Ignore"` means ignore this scheduling directive when calculating pod topology spread skew.
      * @param string|null $nodeTaintsPolicy NodeTaintsPolicy indicates how we will treat node taints when calculating pod topology spread skew. Options are: - Honor: nodes without taints, along with tainted nodes for which the incoming pod has a toleration, are included. - Ignore: node taints are ignored. All nodes are included.
      *
-     * If this value is nil, the behavior is equivalent to the Ignore policy. This is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.
+     * If this value is nil, the behavior is equivalent to the Ignore policy.
      *
      * Possible enum values:
      *  - `"Honor"` means use this scheduling directive when calculating pod topology spread skew.

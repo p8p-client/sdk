@@ -24,6 +24,7 @@ class PodCondition
      * @param \DateTime|null $lastProbeTime      last time we probed the condition
      * @param \DateTime|null $lastTransitionTime last time the condition transitioned from one status to another
      * @param string|null    $message            human-readable message indicating details about last transition
+     * @param int|null       $observedGeneration If set, this represents the .metadata.generation that the pod condition was set based upon. This is an alpha field. Enable PodObservedGenerationTracking to be able to use this field.
      * @param string|null    $reason             unique, one-word, CamelCase reason for the condition's last transition
      */
     public function __construct(
@@ -32,6 +33,7 @@ class PodCondition
         public ?\DateTime $lastProbeTime = null,
         public ?\DateTime $lastTransitionTime = null,
         public ?string $message = null,
+        public ?int $observedGeneration = null,
         public ?string $reason = null,
     ) {
     }

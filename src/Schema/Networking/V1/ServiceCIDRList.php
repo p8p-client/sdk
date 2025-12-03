@@ -11,19 +11,19 @@
 
 declare(strict_types=1);
 
-namespace P8p\Sdk\Schema\Apps\V1;
+namespace P8p\Sdk\Schema\Networking\V1;
 
 use P8p\Client\Attribute\K8sSchema;
 use P8p\Client\Attribute\K8sSchemaRef;
 use P8p\Sdk\Schema\Core\V1\ListMeta;
 
-#[K8sSchemaRef(name: 'io.k8s.api.apps.v1.ReplicaSetList')]
-#[K8sSchema(kind: 'ReplicaSetList', group: 'apps', version: 'v1')]
-class ReplicaSetList
+#[K8sSchemaRef(name: 'io.k8s.api.networking.v1.ServiceCIDRList')]
+#[K8sSchema(kind: 'ServiceCIDRList', group: 'networking.k8s.io', version: 'v1')]
+class ServiceCIDRList
 {
     /**
-     * @param array<int, ReplicaSet> $items    List of ReplicaSets. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset
-     * @param ListMeta|null          $metadata Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+     * @param array<int, ServiceCIDR> $items    items is the list of ServiceCIDRs
+     * @param ListMeta|null           $metadata Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
      */
     public function __construct(
         public array $items,
